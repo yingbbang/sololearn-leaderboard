@@ -1,11 +1,17 @@
 name: Update Sololearn Leaderboard
+
 on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write   # ✅ 이 줄이 핵심 — GitHub Actions가 push 권한을 갖도록 함
+
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,5 +30,5 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add sololearn_scraper/sololearn_leaderboard.json
-          git commit -m "update: Sololearn leaderboard data" || echo "No changes to commit"
+          git commit -m "update: Sololearn leaderboard data" || echo "No changes"
           git push
