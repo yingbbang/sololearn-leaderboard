@@ -1,0 +1,7 @@
+/.idea/
+/sololearn_scraper/.idea/
+/.venv/
+/sololearn_scraper/.venv/
+*.iml
+__pycache__/
+*.pyc
