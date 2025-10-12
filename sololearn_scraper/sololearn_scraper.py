@@ -25,8 +25,22 @@ data = {
     "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
 }
 
-with open("sololearn_leaderboard.json", "w", encoding="utf-8") as f:
+# 1️⃣ JSON 파일 저장 (기존 코드 그대로 유지)
+with open("sololearn_scraper/sololearn_leaderboard.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=2, ensure_ascii=False)
 
 print("✅ Sololearn 리더보드 데이터 저장 완료:")
 print(data)
+
+# 2️⃣ README.md 업데이트 추가 (여기만 새로 추가)
+readme_content = f"""
+## 🧠 Sololearn Leaderboard (자동 업데이트)
+> 이 데이터는 GitHub Actions로 매일 자동 갱신됩니다.
+
+| Username | Name | XP | Rank | Last Updated |
+|-----------|------|----|------|---------------|
+| {data['username']} | {data['name']} | {data['points']} | {data['rank']} | {data['last_updated']} |
+"""
+
+with open("README.md", "w", encoding="utf-8") as f:
+    f.write(readme_content)
