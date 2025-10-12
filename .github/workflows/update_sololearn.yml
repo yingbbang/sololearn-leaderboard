@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write   # ✅ 이 줄이 핵심 — GitHub Actions가 push 권한을 갖도록 함
+  contents: write   # ✅ GitHub Actions가 push 권한을 갖도록 함
 
 jobs:
   update:
@@ -21,6 +21,8 @@ jobs:
           python-version: '3.14'
 
       - name: Run scraper
+        env:
+          SOLOLEARN_USER: ${{ secrets.SOLOLEARN_USER }}   # ✅ 여기 추가 — Secrets 값 넘겨줌
         run: |
           pip install requests beautifulsoup4
           python ./sololearn_scraper/sololearn_scraper.py
@@ -29,7 +31,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add sololearn_scraper/sololearn_leaderboard.json
           git add sololearn_scraper/sololearn_leaderboard.json README.md
           git commit -m "update: Sololearn leaderboard data" || echo "No changes"
           git push
