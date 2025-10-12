@@ -1,0 +1,25 @@
+name: Update Sololearn Leaderboard
+on:
+  schedule:
+    - cron: "0 0 * * *"  # 매일 00시 UTC (한국 시간 오전 9시)
+  workflow_dispatch:  # 수동 실행도 가능
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Run scraper
+        run: |
+          pip install requests beautifulsoup4
+          python sololearn_scraper/sololearn_scraper.py
+      - name: Commit & Push updated JSON
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add sololearn_scraper/sololearn_leaderboard.json
+          git commit -m "update: Sololearn leaderboard data"
+          git push
